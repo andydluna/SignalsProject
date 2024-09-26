@@ -7,7 +7,7 @@ import matplotlib
 START = 0
 END = 10
 
-def plot_graph(operator, val):
+def plot_graph(operator = "", val = ""):
     fig = matplotlib.figure.Figure(figsize=(5, 4), dpi=100)
     if operator == "+":
         t = np.arange(START, END, .01)
@@ -92,4 +92,4 @@ while True:
         plot_graph("*", val)
         
     if event == "-REVERSE-":
-        plot_graph("", "")
+        plot_graph()
