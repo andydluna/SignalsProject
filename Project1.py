@@ -5,35 +5,24 @@ import PySimpleGUI as sg
 import matplotlib
 
 START = 0
-END = 3
+END = 10
 
 def plot_graph(operator, val):
     fig = matplotlib.figure.Figure(figsize=(5, 4), dpi=100)
     if operator == "+":
-        t = np.arange(START - val, END - val, .01)
-        fig.add_subplot(111).plot(t, 2 * np.sin(2 * np.pi * t))
+        t = np.arange(START, END, .01)
+        fig.add_subplot(111).plot(t - val, 2 * np.sin(2 * np.pi * t))
     elif operator == "*":
         t = np.arange(START, END, .01)
-        fig.add_subplot(111).plot(t / val, 2 * np.sin(2 * np.pi * t))
+        fig.add_subplot(111).plot(t, 2 * np.sin(2 * np.pi * t/val))
     else:
         t = np.arange(START, END, .01)
         fig.add_subplot(111).plot(t, 2 * np.sin(2 * np.pi * -t))
 
     
     layout = [
-        [sg.Text("Sine Wave")],
+        [sg.Text("Transformed Wave")],
         [sg.Canvas(key="-CANVAS-")],
-        [
-            sg.In(size=(25, 1), enable_events=True, key="-SHIFT VALUE-"), 
-            sg.VSeparator(),
-            sg.Button("Shift", size=(10, 1), key="-SHIFT-")
-        ],
-        [
-            sg.In(size=(25, 1), enable_events=True, key="-COMPRESS VALUE-"), 
-            sg.VSeparator(),
-            sg.Button("Compress", size=(10, 1), key="-COMPRESS-")
-        ],
-        [sg.Button("Reverse", size=(10, 1), key="-REVERSE-")],
     ]
     
     new_window = sg.Window(
