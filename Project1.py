@@ -17,7 +17,7 @@ def plot_graph(operator, val):
         fig.add_subplot(111).plot(t / val, 2 * np.sin(2 * np.pi * t))
     else:
         t = np.arange(START, END, .01)
-        fig.add_subplot(111).plot(-t, 2 * np.sin(2 * np.pi * t))
+        fig.add_subplot(111).plot(t, 2 * np.sin(2 * np.pi * -t))
 
     
     layout = [
