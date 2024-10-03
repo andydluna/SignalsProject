@@ -134,7 +134,6 @@ def main_menu():
       if event == "-COS-":
         sin_cos_window(type="Cos")
       if event == "-CUSTOM-":
-        // TODO
         print("CUSTOM")
   window.close()
   
