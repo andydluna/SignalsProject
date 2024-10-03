@@ -25,7 +25,7 @@ def overview_window():
         break
   window.close()
       
-def sin_cos_window(type, scale=1, reverse=1, start=-5, end=5):
+def sin_cos_window(type, scale=1, reverse=1, start=-5, end=5, show_options=True):
   fig = matplotlib.figure.Figure(figsize=(5, 4), dpi=100)
   t = np.arange(start, end, .01)
   
@@ -43,26 +43,33 @@ def sin_cos_window(type, scale=1, reverse=1, start=-5, end=5):
       return figure_canvas_agg
 
   # Define the window layout 
-  layout = [
-      [sg.Text(f"{type} Wave")],
-      [sg.Canvas(key="-CANVAS-")],
-      [
-          sg.In(size=(25, 1), enable_events=True, key="-SHIFT VALUE-"), 
-          sg.VSeparator(),
-          sg.Button("Shift", size=(10, 1), key="-SHIFT-")
-      ],
-      [
-          sg.In(size=(25, 1), enable_events=True, key="-COMPRESS VALUE-"), 
-          sg.VSeparator(),
-          sg.Button("Scale", size=(10, 1), key="-COMPRESS-")
-      ],
-      [
-        sg.Button("Reverse", size=(10, 1), key="-REVERSE-"),
-        sg.Button("Shift & Scale", size=(10, 1), key="-COMBINATION-"),
-        sg.Button("SSR", size=(10, 1), key="-ALL-"),
-      ],
-      [ sg.Button("Exit", size=(10, 1), key="Exit") ]
-  ]
+  if show_options:
+    layout = [
+        [sg.Text(f"{type} Wave")],
+        [sg.Canvas(key="-CANVAS-")],
+        [
+            sg.In(size=(25, 1), enable_events=True, key="-SHIFT VALUE-"), 
+            sg.VSeparator(),
+            sg.Button("Shift", size=(10, 1), key="-SHIFT-")
+        ],
+        [
+            sg.In(size=(25, 1), enable_events=True, key="-COMPRESS VALUE-"), 
+            sg.VSeparator(),
+            sg.Button("Scale", size=(10, 1), key="-COMPRESS-")
+        ],
+        [
+          sg.Button("Reverse", size=(10, 1), key="-REVERSE-"),
+          sg.Button("Shift & Scale", size=(10, 1), key="-COMBINATION-"),
+          sg.Button("SSR", size=(10, 1), key="-ALL-"),
+        ],
+        [ sg.Button("Exit", size=(10, 1), key="Exit") ]
+    ]
+  else:
+    layout = [
+        [sg.Text(f"{type} Wave")],
+        [sg.Canvas(key="-CANVAS-")],
+        [ sg.Button("Exit", size=(10, 1), key="Exit") ]
+    ]
 
   # Create the form and show it without the plot
   window = sg.Window(
@@ -85,24 +92,24 @@ def sin_cos_window(type, scale=1, reverse=1, start=-5, end=5):
       
       if event == "-SHIFT-":
         shift = float(values["-SHIFT VALUE-"])
-        sin_cos_window(type, start= start - shift, end= end - shift)
+        sin_cos_window(type, start= start - shift, end= end - shift, show_options=False)
           
       if event == "-COMPRESS-":
         scale = float(values["-COMPRESS VALUE-"])
-        sin_cos_window(type, scale=scale, start=start, end=end)
+        sin_cos_window(type, scale=scale, start=start, end=end, show_options=False)
           
       if event == "-REVERSE-":
-        sin_cos_window(type, reverse=-1, start=start, end=end)
+        sin_cos_window(type, reverse=-1, start=start, end=end, show_options=False)
         
       if event == "-COMBINATION-":
         shift = float(values["-SHIFT VALUE-"])
         scale = float(values["-COMPRESS VALUE-"])
-        sin_cos_window(type, start= start - shift, end= end - shift, scale = scale)
+        sin_cos_window(type, start= start - shift, end= end - shift, scale = scale, show_options=False)
         
       if event == "-ALL-":
         shift = float(values["-SHIFT VALUE-"])
         scale = float(values["-COMPRESS VALUE-"])
-        sin_cos_window(type, start= start - shift, end= end - shift, scale = scale, reverse=-1)
+        sin_cos_window(type, start= start - shift, end= end - shift, scale = scale, reverse=-1, show_options=False)
   window.close()
   
 def main_menu():
