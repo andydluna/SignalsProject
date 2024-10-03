@@ -25,7 +25,7 @@ def overview_window():
         break
   window.close()
       
-def sin_cos_window(type, scale=1, reverse=1, start=-5, end=5, show_options=True):
+def graph_window(type, scale=1, reverse=1, start=-5, end=5, show_options=True):
   fig = matplotlib.figure.Figure(figsize=(5, 4), dpi=100)
   t = np.arange(start, end, .01)
   
@@ -33,7 +33,7 @@ def sin_cos_window(type, scale=1, reverse=1, start=-5, end=5, show_options=True)
     fig.add_subplot(111).plot(t, np.sin(2 * np.pi * reverse *(t / scale)))
   if type == "Cos":
     fig.add_subplot(111).plot(t, np.cos(2 * np.pi * reverse *(t / scale)))
-
+    
   matplotlib.use("TkAgg")
 
   def draw_figure(canvas, figure):
@@ -92,24 +92,24 @@ def sin_cos_window(type, scale=1, reverse=1, start=-5, end=5, show_options=True)
       
       if event == "-SHIFT-":
         shift = float(values["-SHIFT VALUE-"])
-        sin_cos_window(type, start= start - shift, end= end - shift, show_options=False)
+        graph_window(type, start= start - shift, end= end - shift, show_options=False)
           
       if event == "-COMPRESS-":
         scale = float(values["-COMPRESS VALUE-"])
-        sin_cos_window(type, scale=scale, start=start, end=end, show_options=False)
+        graph_window(type, scale=scale, start=start, end=end, show_options=False)
           
       if event == "-REVERSE-":
-        sin_cos_window(type, reverse=-1, start=start, end=end, show_options=False)
+        graph_window(type, reverse=-1, start=start, end=end, show_options=False)
         
       if event == "-COMBINATION-":
         shift = float(values["-SHIFT VALUE-"])
         scale = float(values["-COMPRESS VALUE-"])
-        sin_cos_window(type, start= start - shift, end= end - shift, scale = scale, show_options=False)
+        graph_window(type, start= start - shift, end= end - shift, scale = scale, show_options=False)
         
       if event == "-ALL-":
         shift = float(values["-SHIFT VALUE-"])
         scale = float(values["-COMPRESS VALUE-"])
-        sin_cos_window(type, start= start - shift, end= end - shift, scale = scale, reverse=-1, show_options=False)
+        graph_window(type, start= start - shift, end= end - shift, scale = scale, reverse=-1, show_options=False)
   window.close()
   
 def main_menu():
@@ -119,7 +119,7 @@ def main_menu():
     [sg.Button("Overview", size=(10, 1), key="-OVERVIEW-")],
     [sg.Button("Sin Wave Plot", size=(15, 1), key="-SIN-")],
     [sg.Button("Cos Wave Plot", size=(15, 1), key="-COS-")],
-    [sg.Button("Custom Wave Plot", size=(15, 1), key="-CUSTOM-")],
+    # [sg.Button("Tan Wave Plot", size=(15, 1), key="-TAN-")],
     [sg.Button("Exit", size=(10,1), key="Exit")]
   ]
 
@@ -137,11 +137,11 @@ def main_menu():
       if event == "-OVERVIEW-":
         overview_window()
       if event == "-SIN-":
-        sin_cos_window(type="Sin")
+        graph_window(type="Sin")
       if event == "-COS-":
-        sin_cos_window(type="Cos")
-      if event == "-CUSTOM-":
-        print("CUSTOM")
+        graph_window(type="Cos")
+      # if event == "-TAN-":
+      #   graph_window(type="Tan")
   window.close()
   
 def main():
